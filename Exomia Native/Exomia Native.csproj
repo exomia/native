@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ByteArrayAllocator.cs" />
+    <Compile Include="Collections\List.cs" />
     <Compile Include="Debugger.cs" />
     <Compile Include="Diagnostic.cs" />
     <Compile Include="Mem.cs" />
