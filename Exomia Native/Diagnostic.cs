@@ -56,8 +56,8 @@ namespace Exomia.Native
         [StructLayout(LayoutKind.Sequential)]
         public struct FILETIME
         {
-            public uint DwLowDateTime { get; private set; }
-            public uint DwHighDateTime { get; private set; }
+            public uint DwLowDateTime;
+            public uint DwHighDateTime;
 
             public ulong Value
             {
