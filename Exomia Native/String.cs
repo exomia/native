@@ -67,8 +67,8 @@ namespace Exomia.Native
         private String(int length)
         {
             _length = length;
-            _mPtr = Marshal.AllocHGlobal(length * sizeof(char));
-            _ptr = (char*)_mPtr;
+            _mPtr   = Marshal.AllocHGlobal(length * sizeof(char));
+            _ptr    = (char*)_mPtr;
         }
 
         /// <summary>

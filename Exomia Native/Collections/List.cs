@@ -61,8 +61,8 @@ namespace Exomia.Native.Collections
                         IntPtr mNewItems = Marshal.AllocHGlobal(value * sizeof(T));
                         if (_count > 0) { Mem.Cpy((T*)mNewItems, _items, _count * sizeof(T)); }
                         Marshal.FreeHGlobal(_mItems);
-                        _mItems = mNewItems;
-                        _items = (T*)_mItems;
+                        _mItems   = mNewItems;
+                        _items    = (T*)_mItems;
                         _capacity = value;
                     }
                     else { _items = null; }
@@ -106,7 +106,7 @@ namespace Exomia.Native.Collections
 
         public List2()
         {
-            _items = null;
+            _items    = null;
             _capacity = 0;
         }
 
@@ -114,7 +114,7 @@ namespace Exomia.Native.Collections
         {
             if (capacity < 0) { throw new ArgumentOutOfRangeException(nameof(capacity)); }
             _mItems = capacity == 0 ? IntPtr.Zero : Marshal.AllocHGlobal(capacity * sizeof(T));
-            _items = (T*)_mItems;
+            _items  = (T*)_mItems;
 
             _capacity = capacity;
         }
@@ -144,20 +144,20 @@ namespace Exomia.Native.Collections
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ref T Get(int index)
         {
-            return ref *(_items + index);
+            return ref *_items + index;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ref T Get(uint index)
         {
-            return ref *(_items + index);
+            return ref *_items + index;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Add(in T item)
         {
             if (_count == _capacity) { EnsureCapacity(_count + 1); }
-            *(_items + _count++) = item;
+            *_items + _count++ = item;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -165,7 +165,7 @@ namespace Exomia.Native.Collections
         {
             if (_count == _capacity) { EnsureCapacity(_count + 1); }
             if (index < _count) { Mem.Cpy(_items + index + 1, _items + index, (_count - index) * sizeof(T)); }
-            *(_items + index) = item;
+            *_items + index = item;
             _count++;
         }
 
@@ -285,13 +285,13 @@ namespace Exomia.Native.Collections
             {
                 int newCapacity = _capacity == 0 ? DEFAULT_CAPACITY : _capacity * 2;
                 if (newCapacity > MAX_CAPACITY) { newCapacity = MAX_CAPACITY; }
-                if (newCapacity < min) { newCapacity = min; }
+                if (newCapacity < min) { newCapacity          = min; }
 
                 IntPtr mNewItems = Marshal.AllocHGlobal(newCapacity * sizeof(T));
                 if (_count > 0) { Mem.Cpy((T*)mNewItems, _items, _count * sizeof(T)); }
                 Marshal.FreeHGlobal(_mItems);
                 _mItems = mNewItems;
-                _items = (T*)_mItems;
+                _items  = (T*)_mItems;
             }
         }
     }

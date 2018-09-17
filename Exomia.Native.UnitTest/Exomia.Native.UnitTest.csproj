@@ -52,8 +52,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ByteArrayAllocator.UnitTest1.cs" />
-    <Compile Include="ByteArrayAllocator2.UnitTest1.cs" />
+    <Compile Include="ByteArrayPoolAllocator2.UnitTest1.cs" />
+    <Compile Include="ByteArrayPoolAllocator.UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

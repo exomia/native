@@ -27,12 +27,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Exomia.Native.UnitTest
 {
     [TestClass]
-    public unsafe class ByteArrayAllocator2UnitTest1
+    public unsafe class ByteArrayPoolAllocator2UnitTest1
     {
         [TestMethod]
         public void UsageTest()
         {
-            UnsafeByteArrayAllocator2 allocator = new UnsafeByteArrayAllocator2(new byte[] { 128, 128, 128, 64 }, 7);
+            // 1 << 7 == 100_0000
+            ByteArrayPoolAllocator2 allocator = new ByteArrayPoolAllocator2(new byte[] { 128, 128, 128, 64 }, 7);
 
             byte* ptr1 = allocator.Allocate(50);
             byte* ptr2 = allocator.Allocate(45);
@@ -40,6 +41,7 @@ namespace Exomia.Native.UnitTest
             byte* ptr4 = allocator.Allocate(134);
             byte* ptr5 = allocator.Allocate(512);
 
+            //TODO: FIX FREE (buggy offset?)
             allocator.Free(ptr1, 50);
             allocator.Free(ptr2, 45);
             allocator.Free(ptr3, 64);

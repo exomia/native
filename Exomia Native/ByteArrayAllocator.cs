@@ -28,36 +28,38 @@ using System.Threading;
 
 namespace Exomia.Native
 {
+    // ReSharper disable ArrangeRedundantParentheses
+
     /// <inheritdoc />
     /// <summary>
     ///     UnsafeByteArrayAllocator class
     /// </summary>
-    public unsafe class UnsafeByteArrayAllocator : IDisposable
+    public sealed unsafe class ByteArrayAllocator : IDisposable
     {
         private readonly IntPtr _mPtr;
         private readonly byte* _ptr;
+
         private readonly int _size;
         private readonly int _capacity;
         private byte _head;
-
         private int _count;
 
         private SpinLock _lock;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="UnsafeByteArrayAllocator" /> class.
+        ///     Initializes a new instance of the <see cref="ByteArrayAllocator" /> class.
         /// </summary>
         /// <param name="size">size</param>
         /// <param name="capacity">capacity</param>
-        public UnsafeByteArrayAllocator(int size, byte capacity = 64)
+        public ByteArrayAllocator(int size, byte capacity = 64)
         {
             if (size <= 0) { throw new ArgumentOutOfRangeException(nameof(size)); }
 
-            _size = size + 2;
+            _size     = size + 2;
             _capacity = capacity;
-            _mPtr = Marshal.AllocHGlobal(_size * capacity);
 
-            _ptr = (byte*)_mPtr;
+            _mPtr = Marshal.AllocHGlobal(_size * capacity);
+            _ptr  = (byte*)_mPtr;
 
             _head = 0;
 
@@ -115,7 +117,7 @@ namespace Exomia.Native
                         _lock.Enter(ref lockTaken);
 
                         *(ptr - 1) = _head; // set next on current head index
-                        _head = *(ptr - 2); // set the head now on this elements index
+                        _head      = *(ptr - 2); // set the head now on this elements index
                         _count--;
                     }
                     finally
@@ -144,7 +146,7 @@ namespace Exomia.Native
         }
 
         /// <inheritdoc />
-        ~UnsafeByteArrayAllocator()
+        ~ByteArrayAllocator()
         {
             Dispose(false);
         }
