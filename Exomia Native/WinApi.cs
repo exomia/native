@@ -28,5 +28,6 @@ namespace Exomia.Native
     {
         internal const string MSVCRT = "msvcrt.dll";
         internal const string KERNEL32 = "kernel32.dll";
+        internal const string WINMM = "winmm.dll";
     }
 }

@@ -40,13 +40,13 @@ namespace Exomia.Native.UnitTest
             Assert.IsTrue(0 == *(int*)ptr);
 
             int* t1 = (int*)Marshal.AllocHGlobal(64);
-            *(int**)ptr + 0 = t1;
+            *(int**)(ptr + 0) = t1;
 
             Assert.IsTrue(0 != *(int*)ptr + 0);
             Assert.IsTrue(t1 == (int*)*(int*)ptr + 0);
 
             int* t2 = (int*)Marshal.AllocHGlobal(54);
-            *(int**)ptr + 1 = t2;
+            *(int**)(ptr + 1) = t2;
 
             byte* b1 = (byte*)t2;
             byte* b2 = *ptr + 1;

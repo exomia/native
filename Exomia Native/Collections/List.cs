@@ -144,20 +144,20 @@ namespace Exomia.Native.Collections
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ref T Get(int index)
         {
-            return ref *_items + index;
+            return ref *(_items + index);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ref T Get(uint index)
         {
-            return ref *_items + index;
+            return ref *(_items + index);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Add(in T item)
         {
             if (_count == _capacity) { EnsureCapacity(_count + 1); }
-            *_items + _count++ = item;
+            *(_items + _count++) = item;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -165,7 +165,7 @@ namespace Exomia.Native.Collections
         {
             if (_count == _capacity) { EnsureCapacity(_count + 1); }
             if (index < _count) { Mem.Cpy(_items + index + 1, _items + index, (_count - index) * sizeof(T)); }
-            *_items + index = item;
+            *(_items + index) = item;
             _count++;
         }
 
