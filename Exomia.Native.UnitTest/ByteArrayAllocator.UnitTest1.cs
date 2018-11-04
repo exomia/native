@@ -40,32 +40,32 @@ namespace Exomia.Native.UnitTest
             *(int*)(p1 + 0) = int.MaxValue;
             *(int*)(p1 + 4) = int.MaxValue;
 
-            Assert.AreEqual((byte)1, *p1 - 1);
-            Assert.AreEqual((byte)0, *p1 - 2);
+            Assert.AreEqual(1, *p1 - 1);
+            Assert.AreEqual(0, *p1 - 2);
 
             byte* p2 = allocator.Allocate();
 
             *(int*)(p2 + 0) = int.MaxValue;
             *(int*)(p2 + 4) = int.MaxValue;
 
-            Assert.AreEqual((byte)2, *p2 - 1);
-            Assert.AreEqual((byte)1, *p2 - 2);
+            Assert.AreEqual(2, *p2 - 1);
+            Assert.AreEqual(1, *p2 - 2);
 
             byte* p3 = allocator.Allocate();
 
             *(int*)(p3 + 0) = int.MaxValue;
             *(int*)(p3 + 4) = int.MaxValue;
 
-            Assert.AreEqual((byte)3, *p3 - 1);
-            Assert.AreEqual((byte)2, *p3 - 2);
+            Assert.AreEqual(3, *p3 - 1);
+            Assert.AreEqual(2, *p3 - 2);
 
             byte* p4 = allocator.Allocate();
 
             *(int*)(p4 + 0) = int.MaxValue;
             *(int*)(p4 + 4) = int.MaxValue;
 
-            Assert.AreEqual((byte)4, *p4 - 1);
-            Assert.AreEqual((byte)3, *p4 - 2);
+            Assert.AreEqual(4, *p4 - 1);
+            Assert.AreEqual(3, *p4 - 2);
 
             allocator.Free(p4);
             allocator.Free(p3);
@@ -77,8 +77,8 @@ namespace Exomia.Native.UnitTest
             *(int*)(p5 + 0) = int.MaxValue;
             *(int*)(p5 + 4) = int.MaxValue;
 
-            Assert.AreEqual((byte)1, *p5 - 1);
-            Assert.AreEqual((byte)0, *p5 - 2);
+            Assert.AreEqual(1, *p5 - 1);
+            Assert.AreEqual(0, *p5 - 2);
 
             allocator.Free(p5);
 
@@ -95,32 +95,32 @@ namespace Exomia.Native.UnitTest
             *(int*)(p1 + 0) = int.MaxValue;
             *(int*)(p1 + 4) = int.MaxValue;
 
-            Assert.AreEqual((byte)1, *p1 - 1);
-            Assert.AreEqual((byte)0, *p1 - 2);
+            Assert.AreEqual(1, *p1 - 1);
+            Assert.AreEqual(0, *p1 - 2);
 
             byte* p2 = allocator.Allocate();
 
             *(int*)(p2 + 0) = int.MaxValue;
             *(int*)(p2 + 4) = int.MaxValue;
 
-            Assert.AreEqual((byte)2, *p2 - 1);
-            Assert.AreEqual((byte)1, *p2 - 2);
+            Assert.AreEqual(2, *p2 - 1);
+            Assert.AreEqual(1, *p2 - 2);
 
             byte* p3 = allocator.Allocate();
 
             *(int*)(p3 + 0) = int.MaxValue;
             *(int*)(p3 + 4) = int.MaxValue;
 
-            Assert.AreEqual((byte)3, *p3 - 1);
-            Assert.AreEqual((byte)2, *p3 - 2);
+            Assert.AreEqual(3, *p3 - 1);
+            Assert.AreEqual(2, *p3 - 2);
 
             byte* p4 = allocator.Allocate();
 
             *(int*)(p4 + 0) = int.MaxValue;
             *(int*)(p4 + 4) = int.MaxValue;
 
-            Assert.AreEqual((byte)4, *p4 - 1);
-            Assert.AreEqual((byte)3, *p4 - 2);
+            Assert.AreEqual(4, *p4 - 1);
+            Assert.AreEqual(3, *p4 - 2);
 
             allocator.Free(p1);
 
@@ -129,16 +129,16 @@ namespace Exomia.Native.UnitTest
             *(int*)(p5 + 0) = int.MaxValue;
             *(int*)(p5 + 4) = int.MaxValue;
 
-            Assert.AreEqual((byte)4, *p5 - 1);
-            Assert.AreEqual((byte)0, *p5 - 2);
+            Assert.AreEqual(4, *p5 - 1);
+            Assert.AreEqual(0, *p5 - 2);
 
             byte* p6 = allocator.Allocate();
 
             *(int*)(p6 + 0) = int.MaxValue;
             *(int*)(p6 + 4) = int.MaxValue;
 
-            Assert.AreEqual((byte)0, *p6 - 1);
-            Assert.AreEqual((byte)0, *p6 - 2);
+            Assert.AreEqual(0, *p6 - 1);
+            Assert.AreEqual(0, *p6 - 2);
 
             allocator.Free(p6);
             allocator.Free(p5);
@@ -148,8 +148,8 @@ namespace Exomia.Native.UnitTest
             *(int*)(p7 + 0) = int.MaxValue;
             *(int*)(p7 + 4) = int.MaxValue;
 
-            Assert.AreEqual((byte)4, *p7 - 1);
-            Assert.AreEqual((byte)0, *p7 - 2);
+            Assert.AreEqual(4, *p7 - 1);
+            Assert.AreEqual(0, *p7 - 2);
 
             allocator.Free(p7);
 
@@ -161,8 +161,8 @@ namespace Exomia.Native.UnitTest
             *(int*)(p8 + 0) = int.MaxValue;
             *(int*)(p8 + 4) = int.MaxValue;
 
-            Assert.AreEqual((byte)1, *p8 - 1);
-            Assert.AreEqual((byte)2, *p8 - 2);
+            Assert.AreEqual(1, *p8 - 1);
+            Assert.AreEqual(2, *p8 - 2);
 
             allocator.Free(p4);
 
