@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exomia Native", "Exomia Native\Exomia Native.csproj", "{A6C39C7A-6FC1-4334-BF38-F8CB56FD4205}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exomia.Native", "Exomia.Native\Exomia.Native.csproj", "{A6C39C7A-6FC1-4334-BF38-F8CB56FD4205}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exomia.Native.UnitTest", "Exomia.Native.UnitTest\Exomia.Native.UnitTest.csproj", "{848E1723-9E45-42F7-8649-0C2FA6D2C943}"
 EndProject

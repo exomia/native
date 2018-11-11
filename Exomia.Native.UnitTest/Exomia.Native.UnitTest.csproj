@@ -51,18 +51,18 @@
     <Compile Include="UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Exomia Native\Exomia Native.csproj">
-      <Project>{a6c39c7a-6fc1-4334-bf38-f8cb56fd4205}</Project>
-      <Name>Exomia Native</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="MSTest.TestAdapter">
       <Version>1.3.2</Version>
     </PackageReference>
     <PackageReference Include="MSTest.TestFramework">
       <Version>1.3.2</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Exomia.Native\Exomia.Native.csproj">
+      <Project>{a6c39c7a-6fc1-4334-bf38-f8cb56fd4205}</Project>
+      <Name>Exomia.Native</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
