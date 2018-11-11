@@ -4,7 +4,7 @@
     <Authors>exomia</Authors>
     <Description>native safe/unsafe winapi functions and more</Description>
     <Copyright>Copyright © 2018 exomia</Copyright>
-    <Version>1.0.0.2</Version>
+    <Version>1.0.0.3</Version>
     <PackageLicenseUrl>https://raw.githubusercontent.com/exomia/native/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/exomia/native</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
