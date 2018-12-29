@@ -4,7 +4,7 @@
     <Authors>exomia</Authors>
     <Description>native safe/unsafe winapi functions and more</Description>
     <Copyright>Copyright © 2018 exomia</Copyright>
-    <Version>1.0.0.4</Version>
+    <Version>1.0.0.5</Version>
     <PackageLicenseUrl>https://raw.githubusercontent.com/exomia/native/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/exomia/native</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
@@ -19,6 +19,7 @@
     <PackageOutputPath>.</PackageOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
     <PackageId>$(MSBuildProjectName)</PackageId>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>full</DebugType>
@@ -29,6 +30,7 @@
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <AssemblyName>$(MSBuildProjectName).x64</AssemblyName>
     <PackageId>$(MSBuildProjectName).x64</PackageId>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>full</DebugType>
@@ -39,6 +41,7 @@
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <AssemblyName>$(MSBuildProjectName).x86</AssemblyName>
     <PackageId>$(MSBuildProjectName).x86</PackageId>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>full</DebugType>
@@ -50,6 +53,7 @@
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
     <PackageId>$(MSBuildProjectName)</PackageId>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>none</DebugType>
@@ -58,6 +62,7 @@
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <AssemblyName>$(MSBuildProjectName).x64</AssemblyName>
     <PackageId>$(MSBuildProjectName).x64</PackageId>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>none</DebugType>
@@ -66,6 +71,7 @@
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <AssemblyName>$(MSBuildProjectName).x86</AssemblyName>
     <PackageId>$(MSBuildProjectName).x86</PackageId>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>none</DebugType>
