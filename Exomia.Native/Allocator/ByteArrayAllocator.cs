@@ -26,7 +26,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace Exomia.Native
+namespace Exomia.Native.Allocator
 {
     // ReSharper disable ArrangeRedundantParentheses
 

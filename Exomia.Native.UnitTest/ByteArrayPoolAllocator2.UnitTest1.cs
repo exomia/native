@@ -22,6 +22,7 @@
 
 #endregion
 
+using Exomia.Native.Allocator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Exomia.Native.UnitTest
@@ -33,7 +34,7 @@ namespace Exomia.Native.UnitTest
         public void UsageTest()
         {
             // 1 << 7 == 100_0000
-            ByteArrayPoolAllocator2 allocator = new ByteArrayPoolAllocator2(new byte[] { 128, 128, 128, 64 }, 7);
+            ByteArrayPool2Allocator allocator = new ByteArrayPool2Allocator(new byte[] { 128, 128, 128, 64 }, 7);
 
             byte* ptr1 = allocator.Allocate(50);
             byte* ptr2 = allocator.Allocate(45);

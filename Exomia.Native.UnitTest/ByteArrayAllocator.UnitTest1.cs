@@ -23,6 +23,7 @@
 #endregion
 
 using System.Threading.Tasks;
+using Exomia.Native.Allocator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Exomia.Native.UnitTest

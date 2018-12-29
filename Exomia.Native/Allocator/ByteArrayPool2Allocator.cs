@@ -26,28 +26,50 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Exomia.Native
+namespace Exomia.Native.Allocator
 {
+    // ReSharper disable ArrangeRedundantParentheses
+
     /// <inheritdoc />
     /// <summary>
     ///     UnsafeByteArrayAllocator2 class
     /// </summary>
-    public sealed unsafe class ByteArrayPoolAllocator : IDisposable
+    public sealed unsafe class ByteArrayPool2Allocator : IDisposable
     {
-        private readonly ByteArrayAllocator[] _buckets;
-        private readonly byte[] _bucketCapacity;
+        private static readonly byte* s_nullptr = (byte*)0;
+        private readonly byte** _ptr;
         private readonly int _shift;
 
+        private readonly byte[] _bucketCapacity;
+        private readonly byte[] _bucketHead;
+        private readonly byte[] _bucketCount;
+
         /// <summary>
-        ///     Initializes a new instance of the <see cref="ByteArrayPoolAllocator" /> class.
+        ///     Initializes a new instance of the <see cref="ByteArrayPool2Allocator" /> class.
         /// </summary>
         /// <param name="bucketCapacity">bucketCapacity</param>
         /// <param name="shift">shift</param>
-        public ByteArrayPoolAllocator(byte[] bucketCapacity, int shift)
+        public ByteArrayPool2Allocator(byte[] bucketCapacity, int shift)
         {
             _bucketCapacity = bucketCapacity;
             _shift          = shift;
-            _buckets        = new ByteArrayAllocator[bucketCapacity.Length];
+
+            _ptr = (byte**)Marshal.AllocHGlobal(bucketCapacity.Length * IntPtr.Size);
+
+            Mem.Set(_ptr, 0, bucketCapacity.Length * IntPtr.Size);
+
+            _bucketHead  = new byte[bucketCapacity.Length];
+            _bucketCount = new byte[bucketCapacity.Length];
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void InitializeBucket(byte* ptr, int size, int capacity)
+        {
+            for (byte i = 0; i < capacity; i++)
+            {
+                *(ptr + (i * size) + 0) = i;
+                *(ptr + (i * size) + 1) = (byte)(i + 1);
+            }
         }
 
         /// <summary>
@@ -58,14 +80,30 @@ namespace Exomia.Native
         {
             int bucketIndex = SelectBucketIndex(size);
 
-            if (bucketIndex < _buckets.Length)
+            if (bucketIndex < _bucketCapacity.Length)
             {
-                if (_buckets[bucketIndex] == null)
+                int bucketSize = 1 << (_shift + bucketIndex);
+                if (*(_ptr + bucketIndex) == s_nullptr)
                 {
-                    _buckets[bucketIndex] = new ByteArrayAllocator(
-                        1 << (_shift + bucketIndex), _bucketCapacity[bucketIndex]);
+                    *(_ptr + bucketIndex) =
+                        (byte*)Marshal.AllocHGlobal((bucketSize + 2) * _bucketCapacity[bucketIndex]);
+                    InitializeBucket(*(_ptr + bucketIndex), bucketSize + 2, _bucketCapacity[bucketIndex]);
                 }
-                return _buckets[bucketIndex].Allocate();
+
+                if (_bucketCount[bucketIndex] < _bucketCapacity[bucketIndex])
+                {
+                    byte* bucket = *(_ptr + bucketIndex);
+                    byte next = *(bucket + _bucketHead[bucketIndex] * bucketSize + 1);
+                    byte* buffer = bucket + _bucketHead[bucketIndex] * bucketSize + 2;
+                    _bucketHead[bucketIndex] = next;
+                    _bucketCount[bucketIndex]++;
+                    return buffer;
+                }
+
+                byte* n = (byte*)Marshal.AllocHGlobal(size + 2);
+                *(n + 0) = 0;
+                *(n + 1) = 0;
+                return n + 2;
             }
 
             return (byte*)Marshal.AllocHGlobal(size);
@@ -79,11 +117,23 @@ namespace Exomia.Native
         public void Free(byte* ptr, int size)
         {
             int bucketIndex = SelectBucketIndex(size);
-            if (bucketIndex < _buckets.Length)
+            if (bucketIndex < _bucketCapacity.Length)
             {
-                if (_buckets[bucketIndex] != null)
+                if (*(_ptr + bucketIndex) != s_nullptr)
                 {
-                    _buckets[bucketIndex].Free(ptr);
+                    if (*(ptr - 1) != *(ptr - 2))
+                    {
+                        if (_bucketCount[bucketIndex] > 0)
+                        {
+                            *(ptr - 1)               = _bucketHead[bucketIndex]; // set next on current head index
+                            _bucketHead[bucketIndex] = *(ptr - 2); // set the head now on this elements index
+                            _bucketCount[bucketIndex]--;
+                        }
+                    }
+                    else
+                    {
+                        Marshal.FreeHGlobal(new IntPtr(ptr - 2));
+                    }
                     return;
                 }
                 throw new InvalidOperationException("can't free a buffer which was not allocated by this system");
@@ -134,16 +184,21 @@ namespace Exomia.Native
         {
             if (!_disposedValue)
             {
-                foreach (ByteArrayAllocator bucket in _buckets)
+                for (int i = 0; i < _bucketCapacity.Length; i++)
                 {
-                    bucket?.Dispose();
+                    if (*(_ptr + i) != s_nullptr)
+                    {
+                        Marshal.FreeHGlobal((IntPtr)(*(_ptr + i)));
+                    }
                 }
+                Marshal.FreeHGlobal((IntPtr)_ptr);
+
                 _disposedValue = true;
             }
         }
 
         /// <inheritdoc />
-        ~ByteArrayPoolAllocator()
+        ~ByteArrayPool2Allocator()
         {
             Dispose(false);
         }
