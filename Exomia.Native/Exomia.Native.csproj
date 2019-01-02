@@ -12,7 +12,6 @@
     <PackageTags>exomia native winapi</PackageTags>
     <RepositoryUrl>https://github.com/exomia/native</RepositoryUrl>
     <Platforms>AnyCPU;x64;x86</Platforms>
-    <Platforms>AnyCPU;x64;x86</Platforms>
     <LangVersion>latest</LangVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <RepositoryType>git</RepositoryType>
