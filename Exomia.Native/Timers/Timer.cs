@@ -24,6 +24,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using System.Security;
 
 namespace Exomia.Native.Timers
 {
@@ -80,16 +81,20 @@ namespace Exomia.Native.Timers
             _eventType = eventType;
         }
 
+        [SuppressUnmanagedCodeSecurity]
         [DllImport(WinApi.WINMM, EntryPoint = "timeBeginPeriod", CharSet = CharSet.Auto)]
         private static extern int TimeBeginPeriod(uint uPeriod);
 
+        [SuppressUnmanagedCodeSecurity]
         [DllImport(WinApi.WINMM, EntryPoint = "timeEndPeriod", CharSet = CharSet.Auto)]
         private static extern int TimeEndPeriod(uint uPeriod);
-
+        
+        [SuppressUnmanagedCodeSecurity]
         [DllImport(WinApi.WINMM, EntryPoint = "timeSetEvent", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern uint TimeSetEvent(uint uDelay, uint uResolution, TimerEventHandler lpTimeProc,
             UIntPtr dwUser, uint fuEvent);
-
+        
+        [SuppressUnmanagedCodeSecurity]
         [DllImport(WinApi.WINMM, EntryPoint = "timeKillEvent", CharSet = CharSet.Auto)]
         private static extern int TimeKillEvent(uint id);
 

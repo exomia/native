@@ -138,6 +138,7 @@ namespace Exomia.Native
         /// <param name="ptr2">ptr 2</param>
         /// <param name="count">bytes to compare</param>
         /// <returns>0 if equal</returns>
+        [SuppressUnmanagedCodeSecurity]
         [DllImport(
             WinApi.MSVCRT, EntryPoint = "memcmp", CallingConvention = CallingConvention.Cdecl, SetLastError = false)]
         public static extern int Cmp(

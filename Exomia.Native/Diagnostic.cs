@@ -26,6 +26,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using System.Security;
 
 namespace Exomia.Native
 {
@@ -34,6 +35,7 @@ namespace Exomia.Native
         /// <summary>
         ///     <see href=">https://msdn.microsoft.com/en-us/library/ms724400(VS.85).aspx" />
         /// </summary>
+        [SuppressUnmanagedCodeSecurity]
         [DllImport(WinApi.KERNEL32, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool GetSystemTimes(
@@ -44,6 +46,7 @@ namespace Exomia.Native
         /// <summary>
         ///     <see href=">https://msdn.microsoft.com/en-us/library/ms683223(VS.85).aspx" />
         /// </summary>
+        [SuppressUnmanagedCodeSecurity]
         [DllImport(WinApi.KERNEL32, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool GetProcessTimes(
