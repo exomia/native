@@ -1,6 +1,6 @@
 ﻿#region MIT License
 
-// Copyright (c) 2018 exomia - Daniel Bätz
+// Copyright (c) 2019 exomia - Daniel Bätz
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +33,8 @@ namespace Exomia.Native
     /// </summary>
     public static unsafe class Mem
     {
+        private const string MSVCRT = "msvcrt.dll";
+
         /// <summary>
         ///     memcpy call
         ///     Copies the values of num bytes from the location pointed to by source directly to the memory block pointed to by
@@ -43,7 +45,7 @@ namespace Exomia.Native
         /// <param name="count">count of bytes to copy</param>
         [SuppressUnmanagedCodeSecurity]
         [DllImport(
-            WinApi.MSVCRT, EntryPoint = "memcpy", CallingConvention = CallingConvention.Cdecl, SetLastError = false)]
+            MSVCRT, EntryPoint = "memcpy", CallingConvention = CallingConvention.Cdecl, SetLastError = false)]
         public static extern void Cpy(
             void* dest,
             void* src,
@@ -59,7 +61,7 @@ namespace Exomia.Native
         /// <param name="count">count of bytes to copy</param>
         [SuppressUnmanagedCodeSecurity]
         [DllImport(
-            WinApi.MSVCRT, EntryPoint = "memcpy", CallingConvention = CallingConvention.Cdecl, SetLastError = false)]
+            MSVCRT, EntryPoint = "memcpy", CallingConvention = CallingConvention.Cdecl, SetLastError = false)]
         public static extern void Cpy(
             IntPtr dest,
             IntPtr src,
@@ -75,7 +77,7 @@ namespace Exomia.Native
         /// <param name="count">count of bytes to copy</param>
         [SuppressUnmanagedCodeSecurity]
         [DllImport(
-            WinApi.MSVCRT, EntryPoint = "memcpy", CallingConvention = CallingConvention.Cdecl, SetLastError = false)]
+            MSVCRT, EntryPoint = "memcpy", CallingConvention = CallingConvention.Cdecl, SetLastError = false)]
         public static extern void Cpy(
             void* dest,
             void* src,
@@ -91,7 +93,7 @@ namespace Exomia.Native
         /// <param name="count">count of bytes to copy</param>
         [SuppressUnmanagedCodeSecurity]
         [DllImport(
-            WinApi.MSVCRT, EntryPoint = "memcpy", CallingConvention = CallingConvention.Cdecl, SetLastError = false)]
+            MSVCRT, EntryPoint = "memcpy", CallingConvention = CallingConvention.Cdecl, SetLastError = false)]
         public static extern void Cpy(
             IntPtr dest,
             IntPtr src,
@@ -107,7 +109,7 @@ namespace Exomia.Native
         /// <param name="count">count of bytes</param>
         [SuppressUnmanagedCodeSecurity]
         [DllImport(
-            WinApi.MSVCRT, EntryPoint = "memset", CallingConvention = CallingConvention.Cdecl, SetLastError = false)]
+            MSVCRT, EntryPoint = "memset", CallingConvention = CallingConvention.Cdecl, SetLastError = false)]
         public static extern IntPtr Set(
             IntPtr dest,
             int value,
@@ -123,7 +125,7 @@ namespace Exomia.Native
         /// <param name="count">count of bytes</param>
         [SuppressUnmanagedCodeSecurity]
         [DllImport(
-            WinApi.MSVCRT, EntryPoint = "memset", CallingConvention = CallingConvention.Cdecl, SetLastError = false)]
+            MSVCRT, EntryPoint = "memset", CallingConvention = CallingConvention.Cdecl, SetLastError = false)]
         public static extern void* Set(
             void* dest,
             int value,
@@ -140,7 +142,7 @@ namespace Exomia.Native
         /// <returns>0 if equal</returns>
         [SuppressUnmanagedCodeSecurity]
         [DllImport(
-            WinApi.MSVCRT, EntryPoint = "memcmp", CallingConvention = CallingConvention.Cdecl, SetLastError = false)]
+            MSVCRT, EntryPoint = "memcmp", CallingConvention = CallingConvention.Cdecl, SetLastError = false)]
         public static extern int Cmp(
             void* ptr1,
             void* ptr2,

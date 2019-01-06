@@ -1,6 +1,6 @@
 ﻿#region MIT License
 
-// Copyright (c) 2018 exomia - Daniel Bätz
+// Copyright (c) 2019 exomia - Daniel Bätz
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -93,8 +93,8 @@ namespace Exomia.Native.Allocator
                 if (_bucketCount[bucketIndex] < _bucketCapacity[bucketIndex])
                 {
                     byte* bucket = *(_ptr + bucketIndex);
-                    byte next = *(bucket + _bucketHead[bucketIndex] * bucketSize + 1);
-                    byte* buffer = bucket + _bucketHead[bucketIndex] * bucketSize + 2;
+                    byte next = *(bucket + (_bucketHead[bucketIndex] * bucketSize) + 1);
+                    byte* buffer = bucket + (_bucketHead[bucketIndex] * bucketSize) + 2;
                     _bucketHead[bucketIndex] = next;
                     _bucketCount[bucketIndex]++;
                     return buffer;

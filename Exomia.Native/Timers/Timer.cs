@@ -1,6 +1,6 @@
 ﻿#region MIT License
 
-// Copyright (c) 2018 exomia - Daniel Bätz
+// Copyright (c) 2019 exomia - Daniel Bätz
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -54,6 +54,8 @@ namespace Exomia.Native.Timers
             Periodic = 1
         }
 
+        private const string WINMM = "winmm.dll";
+
         /// <summary>
         ///     Occurs when the interval elapses
         /// </summary>
@@ -82,20 +84,20 @@ namespace Exomia.Native.Timers
         }
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(WinApi.WINMM, EntryPoint = "timeBeginPeriod", CharSet = CharSet.Auto)]
+        [DllImport(WINMM, EntryPoint = "timeBeginPeriod", CharSet = CharSet.Auto)]
         private static extern int TimeBeginPeriod(uint uPeriod);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(WinApi.WINMM, EntryPoint = "timeEndPeriod", CharSet = CharSet.Auto)]
+        [DllImport(WINMM, EntryPoint = "timeEndPeriod", CharSet = CharSet.Auto)]
         private static extern int TimeEndPeriod(uint uPeriod);
-        
+
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(WinApi.WINMM, EntryPoint = "timeSetEvent", CharSet = CharSet.Auto, SetLastError = true)]
+        [DllImport(WINMM, EntryPoint = "timeSetEvent", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern uint TimeSetEvent(uint uDelay, uint uResolution, TimerEventHandler lpTimeProc,
             UIntPtr dwUser, uint fuEvent);
-        
+
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(WinApi.WINMM, EntryPoint = "timeKillEvent", CharSet = CharSet.Auto)]
+        [DllImport(WINMM, EntryPoint = "timeKillEvent", CharSet = CharSet.Auto)]
         private static extern int TimeKillEvent(uint id);
 
         /// <summary>

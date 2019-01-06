@@ -1,6 +1,6 @@
 ﻿#region MIT License
 
-// Copyright (c) 2018 exomia - Daniel Bätz
+// Copyright (c) 2019 exomia - Daniel Bätz
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -40,7 +40,7 @@ namespace Exomia.Native
         /// <param name="isDebuggerPresent"><c>true</c> if a native debugger is attached; <c>false</c> otherwise</param>
         /// <returns><c>true</c> if handle failure; <c>false</c> otherwise</returns>
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(WinApi.KERNEL32, SetLastError = false, ExactSpelling = true)]
+        [DllImport("kernel32.dll", SetLastError = false, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool CheckRemoteDebuggerPresent(
             IntPtr hProcess,

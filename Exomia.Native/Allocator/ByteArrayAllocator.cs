@@ -1,6 +1,6 @@
 ﻿#region MIT License
 
-// Copyright (c) 2018 exomia - Daniel Bätz
+// Copyright (c) 2019 exomia - Daniel Bätz
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -65,8 +65,8 @@ namespace Exomia.Native.Allocator
 
             for (byte i = 0; i < _capacity; i++)
             {
-                *(_ptr + i * _size + 0) = i;
-                *(_ptr + i * _size + 1) = (byte)(i + 1);
+                *(_ptr + (i * _size) + 0) = i;
+                *(_ptr + (i * _size) + 1) = (byte)(i + 1);
             }
 
             _lock = new SpinLock(System.Diagnostics.Debugger.IsAttached);
@@ -83,8 +83,8 @@ namespace Exomia.Native.Allocator
                 _lock.Enter(ref lockTaken);
                 if (_count < _capacity)
                 {
-                    byte next = *(_ptr + _head * _size + 1);
-                    byte* buffer = _ptr + _head * _size + 2;
+                    byte next = *(_ptr + (_head * _size) + 1);
+                    byte* buffer = _ptr + (_head * _size) + 2;
                     _head = next;
                     _count++;
                     return buffer;

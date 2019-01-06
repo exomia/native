@@ -1,6 +1,6 @@
 ﻿#region MIT License
 
-// Copyright (c) 2018 exomia - Daniel Bätz
+// Copyright (c) 2019 exomia - Daniel Bätz
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -32,11 +32,13 @@ namespace Exomia.Native
 {
     public static class Diagnostic
     {
+        private const string KERNEL32 = "kernel32.dll";
+
         /// <summary>
         ///     <see href=">https://msdn.microsoft.com/en-us/library/ms724400(VS.85).aspx" />
         /// </summary>
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(WinApi.KERNEL32, SetLastError = true)]
+        [DllImport(KERNEL32, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool GetSystemTimes(
             out FILETIME lpIdleTime,
@@ -47,7 +49,7 @@ namespace Exomia.Native
         ///     <see href=">https://msdn.microsoft.com/en-us/library/ms683223(VS.85).aspx" />
         /// </summary>
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(WinApi.KERNEL32, SetLastError = true)]
+        [DllImport(KERNEL32, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool GetProcessTimes(
             IntPtr hProcess,
