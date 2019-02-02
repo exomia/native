@@ -282,7 +282,7 @@ namespace Exomia.Native.Collections
             {
                 int newCapacity = _capacity == 0 ? DEFAULT_CAPACITY : _capacity * 2;
                 if (newCapacity > MAX_CAPACITY) { newCapacity = MAX_CAPACITY; }
-                if (newCapacity < min) { newCapacity = min; }
+                if (newCapacity < min) { throw new OutOfMemoryException(); }
 
                 IntPtr mNewItems = Marshal.AllocHGlobal(newCapacity * sizeof(T));
                 if (_count > 0) { Mem.Cpy((T*)mNewItems, _items, _count * sizeof(T)); }
