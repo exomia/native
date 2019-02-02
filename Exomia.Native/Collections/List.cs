@@ -59,7 +59,11 @@ namespace Exomia.Native.Collections
                 {
                     EnsureCapacity(value);
                 }
-                else { _items = null; }
+                else
+                {
+                    _capacity = 0;
+                    _items = null;
+                }
             }
         }
 
