@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net471</TargetFramework>
+    <TargetFrameworks>net471;net472</TargetFrameworks>
     <Authors>exomia</Authors>
     <Description>native safe/unsafe winapi functions and more</Description>
     <Copyright>Copyright © 2018 exomia</Copyright>

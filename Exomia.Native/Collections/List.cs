@@ -22,11 +22,12 @@
 
 #endregion
 
-#pragma warning disable 1591
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+
+#pragma warning disable 1591
 
 namespace Exomia.Native.Collections
 {
@@ -54,19 +55,11 @@ namespace Exomia.Native.Collections
                 {
                     throw new ArgumentOutOfRangeException($"{nameof(Capacity)} must be greater than the current size.");
                 }
-                if (value != _capacity)
+                if (value > 0)
                 {
-                    if (value > 0)
-                    {
-                        IntPtr mNewItems = Marshal.AllocHGlobal(value * sizeof(T));
-                        if (_count > 0) { Mem.Cpy((T*)mNewItems, _items, _count * sizeof(T)); }
-                        Marshal.FreeHGlobal(_mItems);
-                        _mItems   = mNewItems;
-                        _items    = (T*)_mItems;
-                        _capacity = value;
-                    }
-                    else { _items = null; }
+                    EnsureCapacity(value);
                 }
+                else { _items = null; }
             }
         }
 
@@ -106,7 +99,7 @@ namespace Exomia.Native.Collections
 
         public List2()
         {
-            _items    = null;
+            _items = null;
             _capacity = 0;
         }
 
@@ -114,7 +107,7 @@ namespace Exomia.Native.Collections
         {
             if (capacity < 0) { throw new ArgumentOutOfRangeException(nameof(capacity)); }
             _mItems = capacity == 0 ? IntPtr.Zero : Marshal.AllocHGlobal(capacity * sizeof(T));
-            _items  = (T*)_mItems;
+            _items = (T*)_mItems;
 
             _capacity = capacity;
         }
@@ -285,13 +278,14 @@ namespace Exomia.Native.Collections
             {
                 int newCapacity = _capacity == 0 ? DEFAULT_CAPACITY : _capacity * 2;
                 if (newCapacity > MAX_CAPACITY) { newCapacity = MAX_CAPACITY; }
-                if (newCapacity < min) { newCapacity          = min; }
+                if (newCapacity < min) { newCapacity = min; }
 
                 IntPtr mNewItems = Marshal.AllocHGlobal(newCapacity * sizeof(T));
                 if (_count > 0) { Mem.Cpy((T*)mNewItems, _items, _count * sizeof(T)); }
                 Marshal.FreeHGlobal(_mItems);
                 _mItems = mNewItems;
-                _items  = (T*)_mItems;
+                _items = (T*)_mItems;
+                _capacity = newCapacity;
             }
         }
     }
