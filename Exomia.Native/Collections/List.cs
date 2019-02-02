@@ -68,7 +68,7 @@ namespace Exomia.Native.Collections
         }
 
         /// <summary>
-        ///     returns the current number of itms in this list
+        ///     returns the current number of items in this list
         /// </summary>
         public int Count
         {
