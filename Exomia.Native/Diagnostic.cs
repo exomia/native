@@ -22,21 +22,31 @@
 
 #endregion
 
-#pragma warning disable 1591
-
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
 
 namespace Exomia.Native
 {
+    /// <summary>
+    ///     A diagnostic.
+    /// </summary>
     public static class Diagnostic
     {
+        /// <summary>
+        ///     The second kernel 3.
+        /// </summary>
         private const string KERNEL32 = "kernel32.dll";
 
         /// <summary>
-        ///     <see href=">https://msdn.microsoft.com/en-us/library/ms724400(VS.85).aspx" />
+        ///     &lt;see href="&gt;https://msdn.microsoft.com/en-us/library/ms724400(VS.85).aspx" /&gt;
         /// </summary>
+        /// <param name="lpIdleTime">   [out] The idle time. </param>
+        /// <param name="lpKernelTime"> [out] The kernel time. </param>
+        /// <param name="lpUserTime">   [out] The user time. </param>
+        /// <returns>
+        ///     True if it succeeds, false if it fails.
+        /// </returns>
         [SuppressUnmanagedCodeSecurity]
         [DllImport(KERNEL32, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -46,24 +56,48 @@ namespace Exomia.Native
             out FILETIME lpUserTime);
 
         /// <summary>
-        ///     <see href=">https://msdn.microsoft.com/en-us/library/ms683223(VS.85).aspx" />
+        ///     &lt;see href="&gt;https://msdn.microsoft.com/en-us/library/ms683223(VS.85).aspx" /&gt;
         /// </summary>
+        /// <param name="hProcess">       The process. </param>
+        /// <param name="lpCreationTime"> [out] The creation time. </param>
+        /// <param name="lpExitTime">     [out] The exit time. </param>
+        /// <param name="lpKernelTime">   [out] The kernel time. </param>
+        /// <param name="lpUserTime">     [out] The user time. </param>
+        /// <returns>
+        ///     True if it succeeds, false if it fails.
+        /// </returns>
         [SuppressUnmanagedCodeSecurity]
         [DllImport(KERNEL32, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool GetProcessTimes(
-            IntPtr hProcess,
+            IntPtr       hProcess,
             out FILETIME lpCreationTime,
             out FILETIME lpExitTime,
             out FILETIME lpKernelTime,
             out FILETIME lpUserTime);
 
+        /// <summary>
+        ///     A filetime.
+        /// </summary>
         [StructLayout(LayoutKind.Sequential)]
         public struct FILETIME
         {
+            /// <summary>
+            ///     The low date time.
+            /// </summary>
             public uint DwLowDateTime;
+
+            /// <summary>
+            ///     The high date time.
+            /// </summary>
             public uint DwHighDateTime;
 
+            /// <summary>
+            ///     Gets the value.
+            /// </summary>
+            /// <value>
+            ///     The value.
+            /// </value>
             public ulong Value
             {
                 get { return ((ulong)DwHighDateTime << 32) + DwLowDateTime; }

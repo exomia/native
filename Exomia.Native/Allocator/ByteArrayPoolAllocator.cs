@@ -28,21 +28,31 @@ using System.Runtime.InteropServices;
 
 namespace Exomia.Native.Allocator
 {
-    /// <inheritdoc />
     /// <summary>
-    ///     UnsafeByteArrayAllocator2 class
+    ///     UnsafeByteArrayAllocator2 class.
     /// </summary>
     public sealed unsafe class ByteArrayPoolAllocator : IDisposable
     {
+        /// <summary>
+        ///     The buckets.
+        /// </summary>
         private readonly ByteArrayAllocator[] _buckets;
+
+        /// <summary>
+        ///     The bucket capacity.
+        /// </summary>
         private readonly byte[] _bucketCapacity;
+
+        /// <summary>
+        ///     The shift.
+        /// </summary>
         private readonly int _shift;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ByteArrayPoolAllocator" /> class.
         /// </summary>
-        /// <param name="bucketCapacity">bucketCapacity</param>
-        /// <param name="shift">shift</param>
+        /// <param name="bucketCapacity"> bucketCapacity. </param>
+        /// <param name="shift">          shift. </param>
         public ByteArrayPoolAllocator(byte[] bucketCapacity, int shift)
         {
             _bucketCapacity = bucketCapacity;
@@ -51,9 +61,12 @@ namespace Exomia.Native.Allocator
         }
 
         /// <summary>
-        ///     Allocate a new byte array
+        ///     Allocate a new byte array.
         /// </summary>
-        /// <param name="size">size to allocate</param>
+        /// <param name="size"> size to allocate. </param>
+        /// <returns>
+        ///     Null if it fails, else a byte*.
+        /// </returns>
         public byte* Allocate(int size)
         {
             int bucketIndex = SelectBucketIndex(size);
@@ -72,10 +85,11 @@ namespace Exomia.Native.Allocator
         }
 
         /// <summary>
-        ///     free a byte array
+        ///     free a byte array.
         /// </summary>
-        /// <param name="ptr">ptr</param>
-        /// <param name="size">size of ptr</param>
+        /// <param name="ptr">  [in,out] ptr. </param>
+        /// <param name="size"> size of ptr. </param>
+        /// <exception cref="InvalidOperationException"> Thrown when the requested operation is invalid. </exception>
         public void Free(byte* ptr, int size)
         {
             int bucketIndex = SelectBucketIndex(size);
@@ -91,6 +105,13 @@ namespace Exomia.Native.Allocator
             Marshal.FreeHGlobal(new IntPtr(ptr));
         }
 
+        /// <summary>
+        ///     Select bucket index.
+        /// </summary>
+        /// <param name="size"> size to allocate. </param>
+        /// <returns>
+        ///     An int.
+        /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private int SelectBucketIndex(int size)
         {
@@ -128,8 +149,20 @@ namespace Exomia.Native.Allocator
 
         #region IDisposable Support
 
+        /// <summary>
+        ///     True to disposed value.
+        /// </summary>
         private bool _disposedValue;
 
+        /// <summary>
+        ///     Releases the unmanaged resources used by the
+        ///     Exomia.Native.Allocator.ByteArrayPoolAllocator and optionally releases the managed
+        ///     resources.
+        /// </summary>
+        /// <param name="disposing">
+        ///     True to release both managed and unmanaged resources; false to
+        ///     release only unmanaged resources.
+        /// </param>
         private void Dispose(bool disposing)
         {
             if (!_disposedValue)

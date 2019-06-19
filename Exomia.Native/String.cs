@@ -27,19 +27,32 @@ using System.Runtime.InteropServices;
 
 namespace Exomia.Native
 {
-    /// <inheritdoc />
     /// <summary>
-    ///     native String class
+    ///     native String class.
     /// </summary>
     public unsafe class String : IDisposable
     {
+        /// <summary>
+        ///     The pointer.
+        /// </summary>
         private readonly IntPtr _mPtr;
+
+        /// <summary>
+        ///     The pointer.
+        /// </summary>
         private readonly char* _ptr;
+
+        /// <summary>
+        ///     The length.
+        /// </summary>
         private readonly int _length;
 
         /// <summary>
-        ///     return the length of the current string
+        ///     return the length of the current string.
         /// </summary>
+        /// <value>
+        ///     The length.
+        /// </value>
         public int Length
         {
             get { return _length; }
@@ -52,9 +65,9 @@ namespace Exomia.Native
         /// <summary>
         ///     Initializes a new instance of the <see cref="T:Exomia.Network.Native.String" /> class.
         /// </summary>
-        /// <param name="value">managed string value</param>
-        /// <param name="offset">offset</param>
-        /// <param name="length">length</param>
+        /// <param name="value">  managed string value. </param>
+        /// <param name="offset"> offset. </param>
+        /// <param name="length"> length. </param>
         public String(string value, int offset, int length)
             : this(length)
         {
@@ -64,6 +77,10 @@ namespace Exomia.Native
             }
         }
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="String" /> class.
+        /// </summary>
+        /// <param name="length"> length. </param>
         private String(int length)
         {
             _length = length;
@@ -72,34 +89,40 @@ namespace Exomia.Native
         }
 
         /// <summary>
-        ///     concat two strings together
+        ///     concat two strings together.
         /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <returns></returns>
+        /// <param name="a"> . </param>
+        /// <param name="b"> . </param>
+        /// <returns>
+        ///     The result of the operation.
+        /// </returns>
         public static String operator +(String a, String b)
         {
             String s = new String(a.Length + b.Length);
-            Mem.Cpy(s._ptr, a._ptr, a.Length * sizeof(char));
+            Mem.Cpy(s._ptr, a._ptr, a.Length            * sizeof(char));
             Mem.Cpy(s._ptr + a.Length, b._ptr, b.Length * sizeof(char));
             return s;
         }
 
         /// <summary>
-        ///     Convert to a managed string type
+        ///     Convert to a managed string type.
         /// </summary>
-        /// <param name="value">value</param>
-        /// <returns>a managed string</returns>
+        /// <param name="value"> value. </param>
+        /// <returns>
+        ///     a managed string.
+        /// </returns>
         public static explicit operator string(String value)
         {
             return new string(value._ptr, 0, value._length);
         }
 
         /// <summary>
-        ///     Convert to a unmanaged string type
+        ///     Convert to a unmanaged string type.
         /// </summary>
-        /// <param name="value">value</param>
-        /// <returns>a unmanaged string</returns>
+        /// <param name="value"> value. </param>
+        /// <returns>
+        ///     a unmanaged string.
+        /// </returns>
         public static explicit operator String(string value)
         {
             return new String(value);
@@ -107,8 +130,19 @@ namespace Exomia.Native
 
         #region IDisposable Support
 
+        /// <summary>
+        ///     True to disposed value.
+        /// </summary>
         private bool _disposedValue;
 
+        /// <summary>
+        ///     Releases the unmanaged resources used by the Exomia.Native.String and optionally releases
+        ///     the managed resources.
+        /// </summary>
+        /// <param name="disposing">
+        ///     True to release both managed and unmanaged resources; false to
+        ///     release only unmanaged resources.
+        /// </param>
         private void Dispose(bool disposing)
         {
             if (!_disposedValue)

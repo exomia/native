@@ -4,7 +4,7 @@
     <Authors>exomia</Authors>
     <Description>native safe/unsafe winapi functions and more</Description>
     <Copyright>Copyright © 2018 exomia</Copyright>
-    <Version>1.0.0.5</Version>
+    <Version>1.0.0.6</Version>
     <PackageLicenseUrl>https://raw.githubusercontent.com/exomia/native/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/exomia/native</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
@@ -16,11 +16,11 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <RepositoryType>git</RepositoryType>
     <IncludeBuildOutput>true</IncludeBuildOutput>
-    <PackageOutputPath>.</PackageOutputPath> 
+    <PackageOutputPath>.</PackageOutputPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
@@ -29,7 +29,7 @@
     <DefineConstants Condition="'$(Platform)'=='AnyCPU'">DEBUG;TRACE;x86</DefineConstants>
     <DefineConstants Condition="'$(Platform)'!='AnyCPU'">DEBUG;TRACE;$(Platform)</DefineConstants>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
@@ -38,12 +38,12 @@
     <DefineConstants Condition="'$(Platform)'=='AnyCPU'">TRACE;x86</DefineConstants>
     <DefineConstants Condition="'$(Platform)'!='AnyCPU'">TRACE;$(Platform)</DefineConstants>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition="'$(Platform)'=='AnyCPU'">
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
     <PackageId>$(MSBuildProjectName)</PackageId>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition="'$(Platform)'!='AnyCPU'">
     <AssemblyName>$(MSBuildProjectName).$(Platform)</AssemblyName>
     <PackageId>$(MSBuildProjectName).$(Platform)</PackageId>

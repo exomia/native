@@ -30,25 +30,46 @@ namespace Exomia.Native.Allocator
 {
     // ReSharper disable ArrangeRedundantParentheses
 
-    /// <inheritdoc />
     /// <summary>
-    ///     UnsafeByteArrayAllocator2 class
+    ///     UnsafeByteArrayAllocator2 class.
     /// </summary>
     public sealed unsafe class ByteArrayPool2Allocator : IDisposable
     {
+        /// <summary>
+        ///     The nullptr.
+        /// </summary>
         private static readonly byte* s_nullptr = (byte*)0;
+
+        /// <summary>
+        ///     The pointer.
+        /// </summary>
         private readonly byte** _ptr;
+
+        /// <summary>
+        ///     The shift.
+        /// </summary>
         private readonly int _shift;
 
+        /// <summary>
+        ///     The bucket capacity.
+        /// </summary>
         private readonly byte[] _bucketCapacity;
+
+        /// <summary>
+        ///     The bucket head.
+        /// </summary>
         private readonly byte[] _bucketHead;
+
+        /// <summary>
+        ///     Number of buckets.
+        /// </summary>
         private readonly byte[] _bucketCount;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ByteArrayPool2Allocator" /> class.
         /// </summary>
-        /// <param name="bucketCapacity">bucketCapacity</param>
-        /// <param name="shift">shift</param>
+        /// <param name="bucketCapacity"> bucketCapacity. </param>
+        /// <param name="shift">          shift. </param>
         public ByteArrayPool2Allocator(byte[] bucketCapacity, int shift)
         {
             _bucketCapacity = bucketCapacity;
@@ -62,6 +83,12 @@ namespace Exomia.Native.Allocator
             _bucketCount = new byte[bucketCapacity.Length];
         }
 
+        /// <summary>
+        ///     Initializes the bucket.
+        /// </summary>
+        /// <param name="ptr">      [in,out] ptr. </param>
+        /// <param name="size">     size of ptr. </param>
+        /// <param name="capacity"> The capacity. </param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void InitializeBucket(byte* ptr, int size, int capacity)
         {
@@ -73,9 +100,12 @@ namespace Exomia.Native.Allocator
         }
 
         /// <summary>
-        ///     Allocate a new byte array
+        ///     Allocate a new byte array.
         /// </summary>
-        /// <param name="size">size to allocate</param>
+        /// <param name="size"> size to allocate. </param>
+        /// <returns>
+        ///     Null if it fails, else a byte*.
+        /// </returns>
         public byte* Allocate(int size)
         {
             int bucketIndex = SelectBucketIndex(size);
@@ -92,8 +122,8 @@ namespace Exomia.Native.Allocator
 
                 if (_bucketCount[bucketIndex] < _bucketCapacity[bucketIndex])
                 {
-                    byte* bucket = *(_ptr + bucketIndex);
-                    byte next = *(bucket + (_bucketHead[bucketIndex] * bucketSize) + 1);
+                    byte* bucket = *(_ptr                                             + bucketIndex);
+                    byte  next   = *(bucket + (_bucketHead[bucketIndex] * bucketSize) + 1);
                     byte* buffer = bucket + (_bucketHead[bucketIndex] * bucketSize) + 2;
                     _bucketHead[bucketIndex] = next;
                     _bucketCount[bucketIndex]++;
@@ -110,10 +140,11 @@ namespace Exomia.Native.Allocator
         }
 
         /// <summary>
-        ///     free a byte array
+        ///     free a byte array.
         /// </summary>
-        /// <param name="ptr">ptr</param>
-        /// <param name="size">size of ptr</param>
+        /// <param name="ptr">  [in,out] ptr. </param>
+        /// <param name="size"> size of ptr. </param>
+        /// <exception cref="InvalidOperationException"> Thrown when the requested operation is invalid. </exception>
         public void Free(byte* ptr, int size)
         {
             int bucketIndex = SelectBucketIndex(size);
@@ -125,7 +156,7 @@ namespace Exomia.Native.Allocator
                     {
                         if (_bucketCount[bucketIndex] > 0)
                         {
-                            *(ptr - 1)               = _bucketHead[bucketIndex]; // set next on current head index
+                            *(ptr - 1) = _bucketHead[bucketIndex]; // set next on current head index
                             _bucketHead[bucketIndex] = *(ptr - 2); // set the head now on this elements index
                             _bucketCount[bucketIndex]--;
                         }
@@ -141,6 +172,13 @@ namespace Exomia.Native.Allocator
             Marshal.FreeHGlobal(new IntPtr(ptr));
         }
 
+        /// <summary>
+        ///     Select bucket index.
+        /// </summary>
+        /// <param name="size"> size to allocate. </param>
+        /// <returns>
+        ///     An int.
+        /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private int SelectBucketIndex(int size)
         {
@@ -178,8 +216,20 @@ namespace Exomia.Native.Allocator
 
         #region IDisposable Support
 
+        /// <summary>
+        ///     True to disposed value.
+        /// </summary>
         private bool _disposedValue;
 
+        /// <summary>
+        ///     Releases the unmanaged resources used by the
+        ///     Exomia.Native.Allocator.ByteArrayPool2Allocator and optionally releases the managed
+        ///     resources.
+        /// </summary>
+        /// <param name="disposing">
+        ///     True to release both managed and unmanaged resources; false to
+        ///     release only unmanaged resources.
+        /// </param>
         private void Dispose(bool disposing)
         {
             if (!_disposedValue)

@@ -30,27 +30,55 @@ namespace Exomia.Native.Allocator
 {
     // ReSharper disable ArrangeRedundantParentheses
 
-    /// <inheritdoc />
     /// <summary>
-    ///     UnsafeByteArrayAllocator class
+    ///     UnsafeByteArrayAllocator class.
     /// </summary>
     public sealed unsafe class ByteArrayAllocator : IDisposable
     {
+        /// <summary>
+        ///     The pointer.
+        /// </summary>
         private readonly IntPtr _mPtr;
+
+        /// <summary>
+        ///     The pointer.
+        /// </summary>
         private readonly byte* _ptr;
 
+        /// <summary>
+        ///     The size.
+        /// </summary>
         private readonly int _size;
+
+        /// <summary>
+        ///     The capacity.
+        /// </summary>
         private readonly int _capacity;
+
+        /// <summary>
+        ///     The head.
+        /// </summary>
         private byte _head;
+
+        /// <summary>
+        ///     Number of.
+        /// </summary>
         private int _count;
 
+        /// <summary>
+        ///     The lock.
+        /// </summary>
         private SpinLock _lock;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ByteArrayAllocator" /> class.
         /// </summary>
-        /// <param name="size">size</param>
-        /// <param name="capacity">capacity</param>
+        /// <param name="size">     size. </param>
+        /// <param name="capacity"> (Optional) capacity. </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///     Thrown when one or more arguments are outside
+        ///     the required range.
+        /// </exception>
         public ByteArrayAllocator(int size, byte capacity = 64)
         {
             if (size <= 0) { throw new ArgumentOutOfRangeException(nameof(size)); }
@@ -73,8 +101,11 @@ namespace Exomia.Native.Allocator
         }
 
         /// <summary>
-        ///     Allocate a new byte array
+        ///     Allocate a new byte array.
         /// </summary>
+        /// <returns>
+        ///     Null if it fails, else a byte*.
+        /// </returns>
         public byte* Allocate()
         {
             bool lockTaken = false;
@@ -83,7 +114,7 @@ namespace Exomia.Native.Allocator
                 _lock.Enter(ref lockTaken);
                 if (_count < _capacity)
                 {
-                    byte next = *(_ptr + (_head * _size) + 1);
+                    byte  next   = *(_ptr + (_head * _size) + 1);
                     byte* buffer = _ptr + (_head * _size) + 2;
                     _head = next;
                     _count++;
@@ -102,9 +133,9 @@ namespace Exomia.Native.Allocator
         }
 
         /// <summary>
-        ///     free a byte array
+        ///     free a byte array.
         /// </summary>
-        /// <param name="ptr">ptr</param>
+        /// <param name="ptr"> [in,out] ptr. </param>
         public void Free(byte* ptr)
         {
             if (*(ptr - 1) != *(ptr - 2))
@@ -116,7 +147,7 @@ namespace Exomia.Native.Allocator
                     {
                         _lock.Enter(ref lockTaken);
 
-                        *(ptr - 1) = _head; // set next on current head index
+                        *(ptr - 1) = _head;      // set next on current head index
                         _head      = *(ptr - 2); // set the head now on this elements index
                         _count--;
                     }
@@ -134,8 +165,19 @@ namespace Exomia.Native.Allocator
 
         #region IDisposable Support
 
+        /// <summary>
+        ///     True to disposed value.
+        /// </summary>
         private bool _disposedValue;
 
+        /// <summary>
+        ///     Releases the unmanaged resources used by the Exomia.Native.Allocator.ByteArrayAllocator
+        ///     and optionally releases the managed resources.
+        /// </summary>
+        /// <param name="disposing">
+        ///     True to release both managed and unmanaged resources; false to
+        ///     release only unmanaged resources.
+        /// </param>
         private void Dispose(bool disposing)
         {
             if (!_disposedValue)
