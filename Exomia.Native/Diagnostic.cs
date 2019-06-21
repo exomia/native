@@ -25,7 +25,7 @@ namespace Exomia.Native
         private const string KERNEL32 = "kernel32.dll";
 
         /// <summary>
-        ///     &lt;see href="&gt;https://msdn.microsoft.com/en-us/library/ms724400(VS.85).aspx" /&gt;
+        ///     <see href="https://msdn.microsoft.com/en-us/library/ms724400(VS.85).aspx"/>
         /// </summary>
         /// <param name="lpIdleTime">   [out] The idle time. </param>
         /// <param name="lpKernelTime"> [out] The kernel time. </param>
