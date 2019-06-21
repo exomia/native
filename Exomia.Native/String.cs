@@ -44,7 +44,10 @@ namespace Exomia.Native
             get { return _length; }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="T:Exomia.Network.Native.String" /> class.
+        /// </summary>
+        /// <param name="value">  The managed string value. </param>
         public String(string value)
             : this(value, 0, value.Length) { }
 
