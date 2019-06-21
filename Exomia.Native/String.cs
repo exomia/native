@@ -145,6 +145,7 @@ namespace Exomia.Native
             Dispose(false);
         }
 
+        
         /// <inheritdoc/>
         public void Dispose()
         {
