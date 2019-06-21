@@ -51,9 +51,9 @@ namespace Exomia.Native
         /// <summary>
         ///     Initializes a new instance of the <see cref="T:Exomia.Network.Native.String" /> class.
         /// </summary>
-        /// <param name="value">  managed string value. </param>
-        /// <param name="offset"> offset. </param>
-        /// <param name="length"> length. </param>
+        /// <param name="value">  The managed string value. </param>
+        /// <param name="offset"> The offset. </param>
+        /// <param name="length"> The length. </param>
         public String(string value, int offset, int length)
             : this(length)
         {
@@ -66,7 +66,7 @@ namespace Exomia.Native
         /// <summary>
         ///     Initializes a new instance of the <see cref="String" /> class.
         /// </summary>
-        /// <param name="length"> length. </param>
+        /// <param name="length"> The length. </param>
         private String(int length)
         {
             _length = length;
@@ -77,8 +77,8 @@ namespace Exomia.Native
         /// <summary>
         ///     concat two strings together.
         /// </summary>
-        /// <param name="a"> . </param>
-        /// <param name="b"> . </param>
+        /// <param name="a"> The string to process. </param>
+        /// <param name="b"> The string to process. </param>
         /// <returns>
         ///     The result of the operation.
         /// </returns>
@@ -93,7 +93,7 @@ namespace Exomia.Native
         /// <summary>
         ///     Convert to a managed string type.
         /// </summary>
-        /// <param name="value"> value. </param>
+        /// <param name="value"> The value. </param>
         /// <returns>
         ///     a managed string.
         /// </returns>
@@ -105,7 +105,7 @@ namespace Exomia.Native
         /// <summary>
         ///     Convert to a unmanaged string type.
         /// </summary>
-        /// <param name="value"> value. </param>
+        /// <param name="value"> The value. </param>
         /// <returns>
         ///     a unmanaged string.
         /// </returns>
