@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net471;net472;netstandard2.0;netcoreapp2.2</TargetFrameworks>
+    <TargetFrameworks>net471;net472;netstandard2.0;netcoreapp2.2;netcoreapp3.0</TargetFrameworks>
     <Authors>exomia</Authors>
     <Description>native safe/unsafe winapi functions and more</Description>
 	<Copyright>Copyright © $([System.DateTime]::Now.Year) exomia</Copyright>
