@@ -22,7 +22,7 @@ namespace Exomia.Native.Timers
         /// <summary>
         ///     called when the interval elapses.
         /// </summary>
-        /// <param name="sender"> . </param>
+        /// <param name="sender"> The sender. </param>
         public delegate void ElapsedEventHandler(Timer sender);
 
         /// <summary>
